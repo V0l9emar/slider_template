@@ -1,0 +1,121 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>JS</title>
+		<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+		<style>
+		body{
+			margin: 0;			
+		}
+		nav{
+			height: 100vh;
+			width: 100%;
+			position: relative;
+			overflow: hidden;
+		}
+		nav > div{
+			background: center/cover no-repeat;	
+			height: 100vh;
+			width: 100%;
+			position: absolute;
+			transition: left 1s;
+		}
+		nav > div > h1{
+			transform: rotate(90deg) translate(-50%,0);
+			color: white;
+			position: absolute;
+			font: normal 150px 'Montserrat', sans-serif;
+			text-transform: capitalize;
+			width: 100px;
+			margin: 0;
+			user-select: none;
+			transition: left 1s, transform 1s, font 1s;
+		}	
+			nav > div > p{
+				max-width:350px;
+				border:2px solid white;
+				border-radius:10px;
+				padding:10px;
+				color:white;
+				position:absolute;
+				bottom:30%;
+				text-transform:uppercase;
+				text-align:center;
+				font: normal 150px 'Montserrat', sans-serif;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<nav></nav>
+		
+		<script>
+			let title = ["", "home", "about", "work", "contact"];
+			let nav = document.getElementsByTagName("nav")[0];
+			let elWidth = [];
+			
+			for(i=1; i<=4; i++){			
+				nav.innerHTML += '<div onclick="wide(\'i'+i+'\')" id="i' + i + '">' + 
+								'<h1>' + title[i] + '</h1>' + '<p>' + 'Сlick here the navigate to the ' + title[i] + ' section to the website'+ '</p>'
+								'</div>';
+				el = document.getElementById("i"+i);
+				el.style.backgroundImage = "url(slider/"+i+".jpg)";
+				el.style.left = "100%";
+				
+			}
+			setTimeout(reset,1000);
+			window.addEventListener("resize", reset);
+			
+			function reset() {
+				elWidth = [,25,25,25,25];
+				change(elWidth);
+			}
+			
+			function wide(id) {
+				elWidth = [15,15,15,15];
+				elWidth[id[1]] = 55;
+				change(elWidth);
+				setTimeout(reset,2000);
+			}
+			
+			function change(elWidth) {
+				let w = window.innerWidth;
+				let elLeft = 0;
+				for(i=1; i<=4; i++){
+					el = document.getElementById("i"+i);					
+					el.style.left = elLeft + "%";
+					
+					elH= el.getElementsByTagName("h1")[0];
+					tt = el.getElementsByTagName("p")[0];
+					
+					if(elWidth[i]==55) {
+						tt.style.display = "block";
+						tt.style.color = "white";
+						tt.style.left  = (w*.55/2-100) + "px";
+						tt.style.fontSize  = "30px";
+						elH.style.fontSize  = "100px";
+						elH.style.left  = w*.55/2 + "px";
+						elH.style.transform = "rotate(0) translate(-100%,50%)";
+														
+					}
+					else {
+						
+						
+						tt.style.display = "none";
+						elH.style.fontSize  = "150px";
+						elH.style.transform = "rotate(90deg) translate(-50%,0)";
+						elH.style.left  = (w*elWidth[i]/100 - 150)/2 + "px";		
+					}
+
+				
+					elLeft += elWidth[i];
+				}
+			}
+				
+		</script>
+	</body>
+</html>
+
+
+
+
